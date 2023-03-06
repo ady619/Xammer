@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import NewsCard from '../cards/NewsCard';
 
 const Home = () => {
-    const newsApi = "https://newsapi.org/v2/everything?q=tesla&from=2022-12-30&sortBy=publishedAt&apiKey=fb6804faa55b44589f1758dcb7b06226"
+    const apiKey="fb6804faa55b44589f1758dcb7b06226"
+    const newsApi = "https://newsapi.org/v2/everything?q=india&from=2023-01-11&sortBy=publishedAt&apiKey=" + apiKey
     const [newsdata, setNewsData] = useState([])
 
     useEffect(() => {
@@ -10,7 +12,7 @@ const Home = () => {
         .get(newsApi)
         .then((response) => {
             setNewsData(response.data.articles)
-          console.log(response.data.articles);
+          // console.log(response.data.articles);
         })
         .catch((error) => {
           // handle error
@@ -22,15 +24,13 @@ const Home = () => {
     }, [newsApi]);
 
     return (
-      <ul>
+      <>
         {newsdata.map((item, index) => {
           return (
-            <li key={index}>
-              <p>{item.title}</p>
-            </li>
+            <NewsCard key={index} news={item} />
           );
         })}
-      </ul>
+      </>
     );
 }
 
